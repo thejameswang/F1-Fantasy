@@ -8,11 +8,12 @@ mongoose.connection.on("connected", function() {
 
 mongoose.connection.on("error", function() {
   console.log("Error connecting to Mongodb. Check MONGODB_URI in .env")
+  process.exit(1)
 })
 
 mongoose.connect(connectionString)
 
-let db = conn.db("Cluster0");
+// let db = conn.db("Cluster0");
 
 export default db;
 
