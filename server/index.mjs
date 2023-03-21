@@ -3,6 +3,7 @@ import cors from "cors";
 import "./loadEnvironment.mjs";
 import "express-async-errors";
 import users from "./routes/users.mjs";
+import races from "./routes/races.mjs";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 
@@ -14,6 +15,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 mongoose.connection.on("connected", function () {
   console.log("Success: connected to Mongodb!");
@@ -33,6 +35,7 @@ mongoose.connect(connectionString, {
 
 // Load the /posts routes
 app.use("/api/users", users);
+app.use("/api/races", races);
 
 // Global error handling
 app.use((err, _req, res, next) => {
