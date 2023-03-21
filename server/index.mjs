@@ -25,7 +25,11 @@ mongoose.connection.on("error", function (err) {
   process.exit(1);
 });
 console.log(connectionString);
-mongoose.connect(connectionString);
+mongoose.connect(connectionString, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  dbName: "F1",
+});
 
 // Load the /posts routes
 app.use("/api/users", users);

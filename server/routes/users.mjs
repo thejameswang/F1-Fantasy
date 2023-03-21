@@ -3,15 +3,30 @@ import User from "../models/users.mjs";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-  console.log("get here");
-  try {
-    const users = await User.find({});
-    res.send(users);
-  } catch (err) {
-    console.log("here");
-    res.status(500).send(err);
-  }
+router.get("/", (req, res) => {
+  User.find()
+    .then((users) => {
+      res.json(users);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ error: "Internal server error" });
+    });
+});
+
+router.post("/createUsers", (req, res) => {
+  const newUser = new User({
+    name: "Numbo Nuts",
+  });
+  newUser
+    .save()
+    .then(() => {
+      res.status(201).json({ message: "User created successfully!" });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ error: "Internal server error" });
+    });
 });
 
 // // Get a list of 50 posts
